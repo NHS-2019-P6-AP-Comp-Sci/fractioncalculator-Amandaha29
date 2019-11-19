@@ -9,7 +9,12 @@ public class FracCalc {
     public static void main(String[] args)
     {
         // TODO: Read the input from the user and call produceAnswer with an equation
-
+    	Scanner input = new Scanner(System.in);
+    	System.out.println("Welcome to Frac Calc! please enter your values")
+        // TODO: Read the input from the user and call produceAnswer with an equation
+    	String responseFraction = input.nextline();
+    	String result = produceAnswer(fraction);
+    	System.out.println(result);
     }
 
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
@@ -24,7 +29,14 @@ public class FracCalc {
     {
         // TODO: Implement this function to produce the solution to the input
 
-        return "";
+Scanner userInput = new Scanner(input);
+    	
+    	// split string into 3 parts
+    	String firstOper = userInput.next();
+    	String Operator = userInput.next();
+    	String secondOper = userInput.next();
+    	
+        return secondOper;
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
