@@ -10,11 +10,21 @@ public class FracCalc {
     {
         // TODO: Read the input from the user and call produceAnswer with an equation
     	Scanner input = new Scanner(System.in);
-    	System.out.println("Welcome to Frac Calc! please enter your values")
+    	System.out.println("Welcome to Frac Calc! please enter fractions"); 
+    	
         // TODO: Read the input from the user and call produceAnswer with an equation
-    	String responseFraction = input.nextline();
-    	String result = produceAnswer(fraction);
+    	String initResponse = input.nextline();
+    	
+    	
+    	while(!initResponse.equals("quit")) {
+    		
+    	String result = produceAnswer(initResponse);
     	System.out.println(result);
+	    System.out.println("Welcome to Frac Calc! please enter fractions"); 
+    	initResponse = input.nextline();
+    	
+    	}
+
     }
 
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
@@ -28,17 +38,84 @@ public class FracCalc {
     public static String produceAnswer(String input)
     {
         // TODO: Implement this function to produce the solution to the input
-
-Scanner userInput = new Scanner(input);
+    	String org = input;
     	
     	// split string into 3 parts
-    	String firstOper = userInput.next();
-    	String Operator = userInput.next();
-    	String secondOper = userInput.next();
+    	String firstOper = org.substring(0,org.indexOf(''));
+    	org = org.substring(org.indexOf('')+1);
     	
-        return secondOper;
+    	String Operator = org.substring(0,org.indexOf(''));
+    	org = org.substring(org.indexOf('')+1);
+  
+    	String secondOper = org;
+    	
+    	
+        String secondWhole = whole(secondOper); 
+       String secondNum= Num(secondOper);
+       String secondDem= Dem(secondOper);
+           
+       String secondFull= "whole: " + secondWhole +  "numerator: " + secondNum + "denominator: " + secondDem;
+       
+       return secondFull;
+       
+       
     }
+    
+    
 
+    
     // TODO: Fill in the space below with any helper methods that you think you will need
+    
+    public static String secondWhole(String str) {
+    	
+        if (str.indexOf("_") != -1) {
+        	return str.stubstring(0,str.indexOf("_"));
+    
+        }
+        
+        else if (str.indexOf("/") != -1) {
+        	return "0";
+       	
+        }
+        
+        else {
+        	return str;
+        }
+        
+    }
+    
+    
+    public static String secondNum(String str) {
+        if (str.indexOf("_") != -1) {
+        	return str.stubstring(str.indexOf("_")+1,str.indexOf("/"));
+    
+        }
+        
+        else if (str.indexOf("/") != -1) {
+        	return str.stubstring(0,str.indexOf("/"));
+       	
+        }
+        
+        else {
+        	return "0";
+        }
+          
+    }
+    
+    public static String secondDem(String str) {
+        if (str.indexOf("/") != -1) {
+        	return str.stubstring(str.indexOf("/")+1);
+    
+        }
+        
+        
+        else {
+        	return "1";
+        }
+          
+    }
+    
+    
+    
 
 }
