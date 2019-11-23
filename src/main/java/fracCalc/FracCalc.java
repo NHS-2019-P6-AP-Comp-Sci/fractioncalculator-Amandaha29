@@ -50,7 +50,7 @@ public class FracCalc {
     	String secondOper = org;
     	
     	
-        String secondWhole = whole(secondOper); 
+        String secondWhole = Whole(secondOper); 
        String secondNum= Num(secondOper);
        String secondDem= Dem(secondOper);
            
@@ -66,7 +66,7 @@ public class FracCalc {
     
     // TODO: Fill in the space below with any helper methods that you think you will need
     
-    public static String secondWhole(String str) {
+    public static String Whole(String str) {
     	
         if (str.indexOf("_") != -1) {
         	return str.stubstring(0,str.indexOf("_"));
@@ -85,7 +85,7 @@ public class FracCalc {
     }
     
     
-    public static String secondNum(String str) {
+    public static String Num(String str) {
         if (str.indexOf("_") != -1) {
         	return str.stubstring(str.indexOf("_")+1,str.indexOf("/"));
     
@@ -102,7 +102,7 @@ public class FracCalc {
           
     }
     
-    public static String secondDem(String str) {
+    public static String Dem(String str) {
         if (str.indexOf("/") != -1) {
         	return str.stubstring(str.indexOf("/")+1);
     
