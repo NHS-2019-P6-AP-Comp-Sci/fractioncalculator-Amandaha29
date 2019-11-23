@@ -54,8 +54,8 @@ public class FracCalc {
        String secondNum= Num(secondOper);
        String secondDem= Dem(secondOper);
            
-       String secondFull= "whole: " + secondWhole +  "numerator: " + secondNum + "denominator: " + secondDem;
-       
+       String secondFull= "whole:" + secondWhole +  " numerator:" + secondNum + " denominator:" + secondDem;
+       // whole:20 numerator:0 denominator:1
        return secondFull;
        
        
