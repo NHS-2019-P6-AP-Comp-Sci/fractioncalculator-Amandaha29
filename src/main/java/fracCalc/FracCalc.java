@@ -4,6 +4,9 @@
 
 package fracCalc;
 
+
+import java.util.Scanner; 
+
 public class FracCalc {
 
     public static void main(String[] args)
@@ -13,7 +16,7 @@ public class FracCalc {
     	System.out.println("Welcome to Frac Calc! please enter fractions"); 
     	
         // TODO: Read the input from the user and call produceAnswer with an equation
-    	String initResponse = input.nextline();
+    	String initResponse = input.nextLine();
     	
     	
     	while(!initResponse.equals("quit")) {
@@ -21,7 +24,7 @@ public class FracCalc {
     	String result = produceAnswer(initResponse);
     	System.out.println(result);
 	    System.out.println("Welcome to Frac Calc! please enter fractions"); 
-    	initResponse = input.nextline();
+    	initResponse = input.nextLine();
     	
     	}
 
@@ -35,41 +38,113 @@ public class FracCalc {
     //
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
-    public static String produceAnswer(String input)
-    {
+    public static String produceAnswer(String input){
         // TODO: Implement this function to produce the solution to the input
     	String org = input;
     	
     	// split string into 3 parts
-    	String firstOper = org.substring(0,org.indexOf(''));
-    	org = org.substring(org.indexOf('')+1);
     	
-    	String Operator = org.substring(0,org.indexOf(''));
-    	org = org.substring(org.indexOf('')+1);
-  
-    	String secondOper = org;
+    	// first Operand conversion
+    	
+    	String firstOper = org.substring(0,org.indexOf(" "));
     	
     	
-        String secondWhole = Whole(secondOper); 
-       String secondNum= Num(secondOper);
-       String secondDem= Dem(secondOper);
-           
-       String secondFull= "whole:" + secondWhole +  " numerator:" + secondNum + " denominator:" + secondDem;
-       // whole:20 numerator:0 denominator:1
-       return secondFull;
+    
+        String firstWhole = Whole(firstOper); 
+       String firstNum= Num(firstOper);
+       String firstDem= Dem(firstOper);
        
+    	int firstWholeNum = Integer.parseInt(firstWhole);	
+       	int firstNumNum = Integer.parseInt(firstNum);		
+       	int firstDemNum = Integer.parseInt(firstDem);
+       	
+       	org = org.substring(org.indexOf(" ")+1);
        
+      // Operator
+    	
+    	String Operator = org.substring(0,org.indexOf(" "));
+    	
+    	
+    	
+   org = org.substring(org.indexOf(" ")+1);
+   String secondOper = org;
+   
+   
+    	
+ 
+    String secondWhole = Whole(secondOper); 
+    String secondNum= Num(secondOper);
+    String secondDem= Dem(secondOper);
+    
+   	int secondWholeNum = Integer.parseInt(secondWhole);	
+   	int secondNumNum = Integer.parseInt(secondNum);		
+   	int secondDemNum = Integer.parseInt(secondDem);		
+   	
+  		
+     Calculate(Operator,secondWholeNum,secondNumNum,secondDemNum,firstWholeNum,firstNumNum,firstDemNum);
+     
+     
     }
+       
+    
     
     
 
     
     // TODO: Fill in the space below with any helper methods that you think you will need
     
+    public static void Calculate(String opperator,int secondWholeNum, int secondNumNum,int secondDemNum, int firstWholeNum, int firstNumNum, int firstDemNum) {
+    	
+    	
+    	if (opperator.equals("+")) {
+    		int WholeNum = secondWholeNum + firstWholeNum;
+    		int NumNum = secondNumNum + firstNumNum;
+    		System.out.println(WholeNum + NumNum);
+ 
+    		
+    	}
+    	
+    	else if (opperator.equals("-")) {
+    		int WholeNum = secondWholeNum + firstWholeNum;
+    		int NumNum = secondNumNum + firstNumNum;
+    		System.out.println(WholeNum + NumNum);
+ 
+    		
+    	}
+    	
+    	
+    	
+    	else if (opperator.equals("/")) {
+    		int WholeNum = secondWholeNum / firstWholeNum;
+    		int NumNum = secondNumNum/ firstNumNum;
+    		System.out.println(WholeNum + NumNum);
+ 
+    		
+    	}
+    	
+    	
+    	else {
+    		int WholeNum = secondWholeNum * firstWholeNum;
+    		int NumNum = secondNumNum * firstNumNum;
+    		System.out.println(WholeNum + NumNum);
+ 
+    		
+    	}
+    	
+    	
+    	
+    }
+    
+    
+    
+    
+    
+    
     public static String Whole(String str) {
     	
         if (str.indexOf("_") != -1) {
-        	return str.stubstring(0,str.indexOf("_"));
+        	return str.substring(0,str.indexOf("_"));
+        	
     
         }
         
@@ -87,12 +162,12 @@ public class FracCalc {
     
     public static String Num(String str) {
         if (str.indexOf("_") != -1) {
-        	return str.stubstring(str.indexOf("_")+1,str.indexOf("/"));
+        	return str.substring(str.indexOf("_")+1,str.indexOf("/"));
     
         }
         
         else if (str.indexOf("/") != -1) {
-        	return str.stubstring(0,str.indexOf("/"));
+        	return str.substring(0,str.indexOf("/"));
        	
         }
         
@@ -104,7 +179,7 @@ public class FracCalc {
     
     public static String Dem(String str) {
         if (str.indexOf("/") != -1) {
-        	return str.stubstring(str.indexOf("/")+1);
+        	return str.substring(str.indexOf("/")+1);
     
         }
         
