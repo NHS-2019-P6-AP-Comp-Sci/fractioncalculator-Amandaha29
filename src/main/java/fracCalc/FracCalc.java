@@ -4,193 +4,262 @@
 
 package fracCalc;
 
-
-import java.util.Scanner; 
+import java.util.Scanner;
 
 public class FracCalc {
 
-    public static void main(String[] args)
-    {
-        // TODO: Read the input from the user and call produceAnswer with an equation
-    	Scanner input = new Scanner(System.in);
-    	System.out.println("Welcome to Frac Calc! please enter fractions"); 
-    	
-        // TODO: Read the input from the user and call produceAnswer with an equation
-    	String initResponse = input.nextLine();
-    	
-    	
-    	while(!initResponse.equals("quit")) {
+    public static void main(String[] args) 
+    { 
+    	{
+    		System.out.println("Welcome to Frac Calc! please enter fractions. Enter \"quit\" if you would like to exit FracCalc."); 
+
+    		Scanner response = new Scanner(System.in);
+    		String input = response.nextLine(); // input is what the user enters
     		
-    	String result = produceAnswer(initResponse);
-    	System.out.println(result);
-	    System.out.println("Welcome to Frac Calc! please enter fractions"); 
-    	initResponse = input.nextLine();
-    	
+    		
+    		
+    		while(!input.equalsIgnoreCase("quit")) // while the user has not typed quit or Quit run the function 
+			{
+    			System.out.println(produceAnswer(input));
+    			
+    			System.out.println("Welcome to Frac Calc! please enter fractions. Enter \"quit\"  if you would like to exit FracCalc."); 
+    	    	input = response.nextLine();
+
+			}
+    		
+   
+    		response.close();
+    		System.out.println("Thank you for using FracCalc. Goodbye.");
     	}
-
     }
-
+    
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
     // This function takes a String 'input' and produces the result
     //
     // input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
     //      e.g. input ==> "1/2 + 3/4"
-    //
+    //        
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
-    public static String produceAnswer(String input){
-        // TODO: Implement this function to produce the solution to the input
-    	String org = input;
-    	
-    	// split string into 3 parts
-    	
-    	// first Operand conversion
-    	
-    	String firstOper = org.substring(0,org.indexOf(" "));
-    	
-    	
-    
-        String firstWhole = Whole(firstOper); 
-       String firstNum= Num(firstOper);
-       String firstDem= Dem(firstOper);
-       
-    	int firstWholeNum = Integer.parseInt(firstWhole);	
-       	int firstNumNum = Integer.parseInt(firstNum);		
-       	int firstDemNum = Integer.parseInt(firstDem);
-       	
-       	org = org.substring(org.indexOf(" ")+1);
-       
-      // Operator
-    	
-    	String Operator = org.substring(0,org.indexOf(" "));
-    	
-    	
-    	
-   org = org.substring(org.indexOf(" ")+1);
-   String secondOper = org;
-   
-   
-    	
- 
-    String secondWhole = Whole(secondOper); 
-    String secondNum= Num(secondOper);
-    String secondDem= Dem(secondOper);
-    
-   	int secondWholeNum = Integer.parseInt(secondWhole);	
-   	int secondNumNum = Integer.parseInt(secondNum);		
-   	int secondDemNum = Integer.parseInt(secondDem);		
-   	
-  		
-     Calculate(Operator,secondWholeNum,secondNumNum,secondDemNum,firstWholeNum,firstNumNum,firstDemNum);
-     
-     
-    }
-       
-    
-    
-    
+    public static String produceAnswer(String input)
+    { 
+		
+		// Gets terms based on where the spaces are 
+		int space = input.indexOf(" ");
+		if (space == -1)
+		{
+			return ("statement invalid");
+		}
+		else
+		{		
+			// Get parts of calculation 
+			
+			
+			String token = getPt(input);
+			input = removePt(input);
+			parseFraction(token);
+			
+			
+			
+			int firstNumerator = finalNumerator;
+			int firstDenominator = finalDenominator;
+			
+			token = getPt(input);
+			input = removePt(input);
+			String Operator = token;
+			
+			token = getPt(input);
+			input = removePt(input);
+			parseFraction(token);
+			int secondNumerator = finalNumerator;
+			int secondDenominator = finalDenominator;
+			
+			
+	
 
-    
+			boolean calcCheck = false;
+
+            calcCheck = calculate(firstNumerator, firstDenominator, secondNumerator, secondDenominator, Operator);
+		
+		
+			if (calcCheck)
+			{
+				return printFraction(finalNumerator, finalDenominator);
+			}
+			else 
+			{
+				
+				return "error detected.";
+			}
+		}
+    }
+
     // TODO: Fill in the space below with any helper methods that you think you will need
+
+//get parts to calculate
     
-    public static void Calculate(String opperator,int secondWholeNum, int secondNumNum,int secondDemNum, int firstWholeNum, int firstNumNum, int firstDemNum) {
-    	
-    	
-    	if (opperator.equals("+")) {
-    		int WholeNum = secondWholeNum + firstWholeNum;
-    		int NumNum = secondNumNum + firstNumNum;
-    		System.out.println(WholeNum + NumNum);
- 
-    		
-    	}
-    	
-    	else if (opperator.equals("-")) {
-    		int WholeNum = secondWholeNum + firstWholeNum;
-    		int NumNum = secondNumNum + firstNumNum;
-    		System.out.println(WholeNum + NumNum);
- 
-    		
-    	}
-    	
-    	
-    	
-    	else if (opperator.equals("/")) {
-    		int WholeNum = secondWholeNum / firstWholeNum;
-    		int NumNum = secondNumNum/ firstNumNum;
-    		System.out.println(WholeNum + NumNum);
- 
-    		
-    	}
-    	
-    	
-    	else {
-    		int WholeNum = secondWholeNum * firstWholeNum;
-    		int NumNum = secondNumNum * firstNumNum;
-    		System.out.println(WholeNum + NumNum);
- 
-    		
-    	}
-    	
-    	
-    	
-    }
-    
-    
-    
-    
-    
-    
-    public static String Whole(String str) {
-    	
-        if (str.indexOf("_") != -1) {
-        	return str.substring(0,str.indexOf("_"));
-        	
-    
-        }
-        
-        else if (str.indexOf("/") != -1) {
-        	return "0";
-       	
-        }
-        
-        else {
-        	return str;
-        }
-        
-    }
-    
-    
-    public static String Num(String str) {
-        if (str.indexOf("_") != -1) {
-        	return str.substring(str.indexOf("_")+1,str.indexOf("/"));
-    
-        }
-        
-        else if (str.indexOf("/") != -1) {
-        	return str.substring(0,str.indexOf("/"));
-       	
-        }
-        
-        else {
-        	return "0";
-        }
-          
-    }
-    
-    public static String Dem(String str) {
-        if (str.indexOf("/") != -1) {
-        	return str.substring(str.indexOf("/")+1);
-    
-        }
-        
-        
-        else {
-        	return "1";
-        }
-          
-    }
-    
-    
-    
+	private static String getPt(String input)
+	{
+		
+		int space = input.indexOf(' ');
+		if (space == -1)
+			return input;
+		return input.substring(0, space);
+	}
+	
+	
+	public static String removePt(String input)
+	{
+	
+		int space = input.indexOf(" ");
+		if (space == -1)
+			return "";
+		return input.substring(space + 1);
+	}
+
+
+
+	
+	static int finalNumerator;
+	static int finalDenominator;
+
+
+// do calculation 
+	public static boolean calculate(int num1, int dem1, int num2,
+			int dem2, String operator)
+	{
+		if (operator.equals("+"))
+		{
+			finalNumerator = num1 * dem2 + num2 * dem1;
+			finalDenominator = dem1 * dem2;
+		}
+		else if (operator.equals("-"))
+		{
+			finalNumerator = num1 * dem2 - num2 * dem1;
+			finalDenominator = dem1 * dem2;
+		}
+		else if (operator.equals("*"))
+		{
+		    finalNumerator = num1 * num2;
+			finalDenominator = dem1 * dem2;
+		}
+		else if (operator.equals("/"))
+		{
+			finalNumerator = num1 * dem2;
+			finalDenominator = dem1 * num2;
+		}
+		
+		// check for format error
+		else
+		{
+			System.out.println("ERROR: Input is in an invalid format.");
+			return false;
+		}
+		return true;
+	}
+
+	
+	
+
+	private static void parseFraction(String input)
+	{
+
+		int underscore = input.indexOf('_');
+		int slash = input.indexOf('/');
+		if (underscore > 0)
+		{
+			// mixed number.
+			int whole = Integer.parseInt(input.substring(0, underscore));
+		    finalNumerator = Integer.parseInt(input.substring(underscore + 1, slash));
+			
+			if (whole < 0)
+			finalNumerator = 0 - finalNumerator;
+			finalDenominator = Integer.parseInt(input.substring(slash + 1));
+			finalNumerator =finalNumerator + whole * finalDenominator;
+		}
+		else if (slash > 0)
+		{
+
+			finalNumerator = Integer.parseInt(input.substring(0, slash));
+			finalDenominator = Integer.parseInt(input.substring(slash + 1));
+		}
+		else
+		{
+			// whole number.
+			finalNumerator = Integer.parseInt(input);
+			finalDenominator = 1;
+		}
+	}
+	
+	
+	
+	// Simplify and print fraction.
+	private static String printFraction(int numerator, int denominator)
+	{
+		String result = "";
+	// if denominator is negative make numerator negative instead
+		if (denominator < 0)
+		{
+			denominator = Math.abs(denominator) ;
+			numerator = 0 - numerator;
+		}
+		if (numerator < 0)
+		{
+	// print "-" with negative fractions 
+			result += "-";
+			numerator = Math.abs(numerator);
+		}
+			
+		
+	// find common denominator 
+		int commonDem = findDem(numerator, denominator);
+		numerator = numerator / commonDem;
+		denominator = denominator / commonDem;
+
+	//  simplify to  mixed number.
+		int wholeNum = numerator / denominator;
+		numerator = numerator % denominator;
+
+
+		if (numerator == 0)
+		{
+			result += wholeNum;
+		}
+		else
+		{
+			if (wholeNum > 0)
+			{
+		
+				result += (wholeNum + "_");
+		}
+		
+			result += (numerator + "/" + denominator);
+		}
+		return result;
+	}
+
+	
+	
+	
+
+	private static int findDem(int num, int dem)
+	{
+		while (true) {
+			if (num < dem) {
+				int t = num;
+				num = dem;
+				dem = t;
+			}
+			if (dem == 0)
+				return num;
+			num = num % dem;
+		}
+	}
 
 }
+
+
+
+
+
+
